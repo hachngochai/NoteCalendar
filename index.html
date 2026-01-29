@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lịch Tết 3D</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+    <header>
+        <h1>NOTE CALENDAR</h1>
+    </header>
+        <!-- TẾT DECOR NGOÀI -->
+    <div class="tet-decor dao-mai"></div>
+    <div class="tet-decor kilan"></div>
+
+    <div class="container">
+        <div class="calendar">
+            <!-- ===== FRONT : CALENDAR ===== -->
+            <div class="front">
+                <button id="resetModeBtn">RESET</button>
+                <img src="assets/image/horse.png" class="tet-horse" alt="Ngựa vàng Tết" />
+                    <!-- Header -->
+                    <div class="current-date">
+                        <button id="prev" aria-label="Tháng trước">‹</button>
+
+                        <div class="date-text">
+                            <h1 id="day-name"></h1>
+                            <h1 id="month-year"></h1>
+                            <p id="lunar-date"></p>
+                        </div>
+                    <button id="next" aria-label="Tháng sau">›</button>
+                </div>
+
+                <!-- Week days -->
+                <ul class="week-days">
+                    <li>TH 2</li>
+                    <li>TH 3</li>
+                    <li>TH 4</li>
+                    <li>TH 5</li>
+                    <li>TH 6</li>
+                    <li>TH 7</li>
+                    <li>CN</li>
+                </ul>
+                <!-- Days -->
+                <div class="weeks" id="calendar-days"></div>
+            </div>
+
+            <!-- ===== BACK : EVENT FORM ===== -->
+            <div class="back">
+                <!-- Event title -->
+                <input
+                    id="eventTitle"
+                    type="text"
+                    placeholder="Nhập sự kiện..."
+                />
+
+                <!-- Event info -->
+                <div class="info">
+                    <div class="field">
+                        <label>Ngày</label>
+                        <div id="eventDateText" class="readonly"></div>
+                    </div>
+
+                    <div class="field">
+                        <label>Giờ</label>
+                        <input type="time" id="eventTime" />
+                    </div>
+
+                    <div class="field">
+                        <label>Địa điểm</label>
+                        <input
+                        type="text"
+                        id="eventLocation"
+                        placeholder="Ví dụ: Nhà, Trường, Quán cà phê"
+                        />
+                    </div>
+
+                    <div class="field note">
+                        <label>Ghi chú</label>
+                        <textarea
+                        id="eventNote"
+                        rows="3"
+                        placeholder="Ghi chú thêm..."
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button id="saveEvent">LƯU</button>
+                    <button id="cancelEvent">HUỶ</button>
+                </div>
+            </div>
+            
+        </div>
+
+        <footer>
+            <a>Copyright by KioTarot, 2026</a>
+        </footer>
+    </div>
+
+    <canvas id="fireworks"></canvas>
+    <!-- RESET MODAL -->
+    <div id="resetModal" class="reset-modal hidden">
+        <div class="reset-box">
+            <h2>🗑️ Xoá lịch trình</h2>
+            <p>Bạn muốn làm gì?</p>
+            <div class="reset-actions">
+                <button id="confirmReset">Chọn ngày để xoá</button>
+                <button id="cancelReset">Huỷ</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="https://app.embed.im/snow.js"></script>
+
+</body>
+</html>
