@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap');
 
+
+
 .current-date h1 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -183,10 +185,17 @@ body {
   background: rgba(255, 213, 79, 0.25);
 }
 
+.weeks span.event {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
 .weeks span.active {
-  background: radial-gradient(circle, #ffd54f, #f57c00);
-  color: #b71c1c;
-  font-weight: bold;
+  background: radial-gradient(circle, var(--accent-color), #f57c00);
+  color: #7f1d1d;
+  box-shadow:
+    0 0 8px var(--accent-color),
+    0 0 16px rgba(255, 215, 0, 0.6);
 }
 
 /* event dot */
@@ -642,3 +651,265 @@ footer {
   from { transform: scale(0.85); opacity: 0; }
   to   { transform: scale(1); opacity: 1; }
 }
+
+
+/* ================= THEME CORE ================= */
+:root {
+  --calendar-bg: #a12424;
+  --calendar-text: #fff8e1;
+  --calendar-accent: #ffd54f;
+}
+
+/* TEST TRƯỚC: gắn vào calendar */
+.calendar {
+  background: var(--calendar-bg);
+  color: var(--calendar-text);
+}
+
+.weeks span.active {
+  background: var(--calendar-accent);
+}
+
+/* ================= THEME BUTTON ================= */
+.theme-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.4em;
+  cursor: pointer;
+  z-index: 999;
+  background: #ffffff;
+}
+
+/* ================= THEME MODAL ================= */
+.theme-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.theme-modal.hidden {
+  display: none;
+}
+
+.theme-box {
+  background: #ffffff;
+  padding: 20px;
+  width: 400px;
+  border-radius: 12px;
+}
+
+.theme-box label {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+}
+
+
+/* ===== THEME ACTION BUTTONS ===== */
+.theme-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.theme-actions button {
+  min-width: 90px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* ÁP DỤNG */
+#applyTheme {
+  background: linear-gradient(135deg, #ffcc00, #ff9800);
+  color: #5a1a00;
+}
+#applyTheme:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px #ff9800;
+  color: red;
+}
+
+/* RESET */
+#resetTheme {
+  background: linear-gradient(135deg, #ff5252, #c62828);
+  color: #fff;
+}
+#resetTheme:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(198, 40, 40, 1);
+
+}
+
+/* HUỶ */
+#closeTheme {
+  background: #00ff6aa2;
+  color: #229200;
+}
+#closeTheme:hover {
+  background: #000000;
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* ===== TIME PICKER ===== */
+.time-picker {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.time-picker.hidden {
+  display: none;
+}
+
+.time-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 24px;
+  width: 260px;
+  text-align: center;
+}
+
+.time-box h4 {
+  margin-bottom: 14px;
+}
+
+.time-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.time-row select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* ===== TIME PICKER BUTTON ===== */
+.time-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.time-actions button {
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* 🔥 ĐI TỚI */
+#goTime {
+  background: linear-gradient(145deg, #ffcc33, #ff9800);
+  color: #7f1d1d;
+  box-shadow:
+    0 0 6px rgba(255, 193, 7, 0.8),
+    inset 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+#goTime:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 16px rgba(255, 193, 7, 0.9);
+  color: red;
+}
+
+#goTime:active {
+  transform: scale(0.96);
+}
+
+/* ❌ HUỶ */
+#closeTime {
+  background: linear-gradient(145deg, #e0e0e0, #bdbdbd);
+  color: #444;
+  box-shadow:
+    inset 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+#closeTime:hover {
+  background: black;
+  color: white;
+}
+
+#closeTime:active {
+  transform: scale(0.95);
+}
+
+/* ===== GO TO YEAR EFFECT (RUNG + GIỌT NƯỚC) ===== */
+.calendar.year-jump {
+  animation: yearShake 0.45s ease;
+}
+
+@keyframes yearShake {
+  0%   { transform: scale(1) translateX(0); }
+  20%  { transform: scale(1.01) translateX(-6px); }
+  40%  { transform: scale(0.99) translateX(6px); }
+  60%  { transform: scale(1.01) translateX(-4px); }
+  80%  { transform: scale(1) translateX(2px); }
+  100% { transform: scale(1) translateX(0); }
+}
+
+/* ripple giọt nước */
+.calendar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.calendar.year-jump::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 0.35;
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35);
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 0 40px rgba(255, 255, 255, 0);
+  }
+}
+
+.change-horse-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 20;
+  border: none;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+

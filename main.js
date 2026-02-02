@@ -148,24 +148,46 @@ cancelReset.onclick = () => {
   resetModal.classList.add("hidden");
 };
 
+
 /* ===== NAVIGATION ===== */
+function animateCalendar(direction) {
+  calendarDays.classList.remove("slide-left", "slide-right");
+
+  // force reflow để reset animation
+  void calendarDays.offsetWidth;
+
+  calendarDays.classList.add(
+    direction === "next" ? "slide-left" : "slide-right"
+  );
+}
+
 document.getElementById("prev").onclick = () => {
-  viewMonth--;
-  if (viewMonth < 0) {
-    viewMonth = 11;
-    viewYear--;
-  }
-  renderCalendar(viewMonth, viewYear);
+  animateCalendar("prev");
+
+  setTimeout(() => {
+    viewMonth--;
+    if (viewMonth < 0) {
+      viewMonth = 11;
+      viewYear--;
+    }
+    renderCalendar(viewMonth, viewYear);
+  }, 220); // ⏱ đúng với CSS animation
 };
 
+
 document.getElementById("next").onclick = () => {
-  viewMonth++;
-  if (viewMonth > 11) {
-    viewMonth = 0;
-    viewYear++;
-  }
-  renderCalendar(viewMonth, viewYear);
+  animateCalendar("next");
+
+  setTimeout(() => {
+    viewMonth++;
+    if (viewMonth > 11) {
+      viewMonth = 0;
+      viewYear++;
+    }
+    renderCalendar(viewMonth, viewYear);
+  }, 220);
 };
+
 
 /* ===== INIT ===== */
 renderCalendar(viewMonth, viewYear);
@@ -291,3 +313,185 @@ setInterval(() => {
     new Firework(baseX + (Math.random() * spread - spread / 2))
   );
 }, 1500);
+
+
+
+/* ================= THEME SYSTEM (STEP 1) ================= */
+const themeModal = document.getElementById("themeModal");
+const openTheme = document.getElementById("openTheme");
+const closeTheme = document.getElementById("closeTheme");
+const applyThemeBtn = document.getElementById("applyTheme");
+
+const bgInput = document.getElementById("theme-bg");
+const textInput = document.getElementById("theme-text");
+const accentInput = document.getElementById("theme-accent");
+
+/* open / close */
+openTheme.onclick = () => themeModal.classList.remove("hidden");
+closeTheme.onclick = () => themeModal.classList.add("hidden");
+
+/* apply */
+applyThemeBtn.onclick = () => {
+  const theme = {
+    bg: bgInput.value,
+    text: textInput.value,
+    accent: accentInput.value
+  };
+
+  setTheme(theme);
+  localStorage.setItem("calendarTheme", JSON.stringify(theme));
+  themeModal.classList.add("hidden");
+};
+
+/* apply theme to css variables */
+function setTheme(theme) {
+  if (theme.bg)
+    document.documentElement.style.setProperty("--calendar-bg", theme.bg);
+  if (theme.text)
+    document.documentElement.style.setProperty("--calendar-text", theme.text);
+  if (theme.accent)
+    document.documentElement.style.setProperty("--calendar-accent", theme.accent);
+}
+
+/* load saved theme */
+const savedTheme = JSON.parse(localStorage.getItem("calendarTheme"));
+if (savedTheme) setTheme(savedTheme);
+
+const resetThemeBtn = document.getElementById("resetTheme");
+const DEFAULT_THEME = {
+  bg: "#a12424",
+  text: "#fff8e1",
+  accent: "#ffd54f"
+};
+
+resetThemeBtn.onclick = () => {
+  // reset CSS variables
+  setTheme(DEFAULT_THEME);
+
+  // xoá theme custom đã lưu
+  localStorage.removeItem("calendarTheme");
+
+  // set lại color picker cho đúng màu mặc định
+  bgInput.value = DEFAULT_THEME.bg;
+  textInput.value = DEFAULT_THEME.text;
+  accentInput.value = DEFAULT_THEME.accent;
+};
+
+const timePicker = document.getElementById("timePicker");
+const pickMonth = document.getElementById("pickMonth");
+const pickYear = document.getElementById("pickYear");
+
+monthYear.style.cursor = "pointer";
+
+monthYear.onclick = () => {
+  openTimePicker();
+};
+
+function openTimePicker() {
+  pickMonth.innerHTML = "";
+  pickYear.innerHTML = "";
+
+  // tháng
+  monthsVN.forEach((m, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = m;
+    if (i === viewMonth) opt.selected = true;
+    pickMonth.appendChild(opt);
+  });
+
+  // năm (±20 năm)
+  const currentYear = today.getFullYear();
+  for (let y = currentYear - 20; y <= currentYear + 20; y++) {
+    const opt = document.createElement("option");
+    opt.value = y;
+    opt.textContent = y;
+    if (y === viewYear) opt.selected = true;
+    pickYear.appendChild(opt);
+  }
+
+  timePicker.classList.remove("hidden");
+}
+
+function goToDate(year, month) {
+  viewYear = year;
+  viewMonth = month;
+
+  // animation chuyển cảnh theo hướng "nhảy"
+  animateCalendar("next");
+
+  renderCalendar(viewMonth, viewYear);
+}
+
+document.getElementById("goTime").onclick = () => {
+  const y = parseInt(document.getElementById("pickYear").value);
+  const m = parseInt(document.getElementById("pickMonth").value);
+
+  if (isNaN(y) || isNaN(m)) return;
+
+  const cal = document.querySelector(".calendar");
+
+  // reset animation nếu spam click
+  cal.classList.remove("year-jump");
+  void cal.offsetWidth; // force reflow
+
+  // thêm hiệu ứng rung + ripple
+  cal.classList.add("year-jump");
+
+  // delay nhẹ cho cảm giác "nhảy năm"
+  setTimeout(() => {
+    goToDate(y, m); // JS month bắt đầu từ 0
+  }, 180);
+
+  document.getElementById("timeModal").classList.add("hidden");
+};
+
+document.getElementById("closeTime").onclick = () => {
+  timePicker.classList.add("hidden");
+};
+
+timePicker.onclick = (e) => {
+  if (e.target === timePicker) {
+    timePicker.classList.add("hidden");
+  }
+};
+
+/* ===== CUSTOM TET IMAGE ===== */
+const horseImg = document.getElementById("tetHorse");
+const horsePicker = document.getElementById("horsePicker");
+const changeHorseBtn = document.getElementById("changeHorseBtn");
+
+/* load ảnh đã lưu */
+const savedHorse = localStorage.getItem("tetHorseImage");
+if (savedHorse) {
+  horseImg.src = savedHorse;
+}
+
+/* click nút → mở file picker */
+changeHorseBtn.onclick = () => {
+  horsePicker.click();
+};
+
+/* khi chọn ảnh */
+horsePicker.onchange = () => {
+  const file = horsePicker.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith("image/")) {
+    alert("Vui lòng chọn file ảnh");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    horseImg.src = reader.result;
+    localStorage.setItem("tetHorseImage", reader.result);
+  };
+  reader.readAsDataURL(file);
+};
+
+// function resetHorse() {
+//   horseImg.src = "horse.png";
+//   localStorage.removeItem("tetHorseImage");
+// }
+

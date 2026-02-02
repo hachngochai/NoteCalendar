@@ -21,11 +21,16 @@
             <!-- ===== FRONT : CALENDAR ===== -->
             <div class="front">
                 <button id="resetModeBtn">RESET</button>
-                <img src="horse.png" class="tet-horse" alt="Ngựa vàng Tết" />
-                    <!-- Header -->
-                    <div class="current-date">
-                        <button id="prev" aria-label="Tháng trước">‹</button>
-
+                <img src="horse.png" class="tet-horse" id="tetHorse" title="Nhấn để đổi ảnh nền"; alt="Ngựa vàng Tết" />
+                <input 
+                    type="file"
+                    id="horsePicker"
+                    accept="image/*"
+                    hidden
+                />
+                <!-- Header -->
+                <div class="current-date">
+                    <button id="prev" aria-label="Tháng trước">‹</button>
                         <div class="date-text">
                             <h1 id="day-name"></h1>
                             <h1 id="month-year"></h1>
@@ -110,10 +115,63 @@
             <p>Bạn muốn làm gì?</p>
             <div class="reset-actions">
                 <button id="confirmReset">Chọn ngày để xoá</button>
-                <button id="cancelReset">Huỷ</button>
+                <button id="cancelReset">Hủy</button>
             </div>
         </div>
     </div>
+
+    <!-- THEME PANEL -->
+    <div id="themeModal" class="theme-modal hidden">
+        <div class="theme-box">
+            <h3>🎨 Tuỳ chỉnh giao diện</h3>
+
+            <label>
+                Nền lịch
+                <input type="color" id="theme-bg" />
+            </label>
+
+            <label>
+                Màu chữ
+                <input type="color" id="theme-text" />
+            </label>
+
+            <label>
+                Ngày nổi bật
+                <input type="color" id="theme-accent" />
+            </label>
+
+            <div class="theme-actions">
+                <button id="applyTheme">ÁP DỤNG</button>
+                <button id="resetTheme">RESET</button>
+                <button id="closeTheme">HỦY</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- BUTTON -->
+    <button id="openTheme" class="theme-btn">🎨</button>
+    <button id="changeHorseBtn" class="change-horse-btn">🖼️</button>
+
+    
+    <!-- TIME PICKER -->
+    <div id="timePicker" class="time-picker hidden">
+        <div class="time-box">
+            <h4>📅 Chọn thời gian</h4>
+
+            <div class="time-row">
+                <select id="pickMonth"></select>
+                <select id="pickYear"></select>
+            </div>
+
+            <div class="time-actions">
+                <button id="goTime">ĐI TỚI</button>
+                <button id="closeTime">HỦY</button>
+            </div>
+        </div>
+    </div>
+
+    
 
     
 
